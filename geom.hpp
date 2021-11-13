@@ -34,9 +34,9 @@ struct Line {
     Line(double A = 0, double B = 0, double C = 0) : A(A), B(B), C(C) {}
 
     Line(const Point& p1, const Point& p2) { 
-        A = (p1.y - p2.y) /* / (p1.x - p2.x) */; 
-        B = -(p1.x - p2.x); 
-        C = -(p1.x - p2.x) * p1.y - (A * p1.x) /* * (p1.x - p2.x) */;
+        A = p1.y - p2.y;
+        B = p2.x - p1.x;
+        C = -(A*p1.x + B*p1.y);
     }
 
     bool parallel(const Line& other) const {
@@ -53,7 +53,7 @@ struct Line {
     }
 
     Line perpendicular(const Point& p) {
-        return Line(-this->B, this->A, this->B * p.x - this->A * p.y);
+        return Line(-(this->B), this->A, this->B * p.x - this->A * p.y);
     }
 
     void print(ostream& out) const {
